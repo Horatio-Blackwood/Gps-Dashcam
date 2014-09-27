@@ -22,13 +22,16 @@ def save_report(report, outfile):
 if __name__ == "__main__":
 
     # Initialize variables
-    output_dir = "./dashcam/" + str(int(round(time.time())))
-    if not os.path.exists("./dashcam"):
-        os.mkdir("./dashcam")
+    output_dir = "./data/" + str(int(round(time.time())))
+    pic_dir = output_dir + "/pics"
+    if not os.path.exists("./data"):
+        os.mkdir("./data")
 
     os.mkdir(output_dir)
+    os.mkdir(pic_dir)
     gps_outfile = output_dir + "/gps.txt"
     gps_session = dashgps.initialize()
+    cam = dashcam.initialize()
     
     write_line(dashgps.get_gps_csv_header(), gps_outfile)
     
@@ -45,4 +48,4 @@ if __name__ == "__main__":
         save_report(report, gps_outfile)
 
         # Get Photo
-        
+        dashcam.take_picture(cam, pic_dir + "/" + identifier + ".jpg")
