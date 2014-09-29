@@ -17,14 +17,3 @@ def cleanup_camera(cam):
 
 def take_picture(cam, filename):
     cam.capture(filename)
-
-
-def test_main():
-    cam = initialize(1280, 720)
-    if cam is not None:
-        take_picture(cam, "test.jpg")
-    else:
-        print "No camera found."
-
-if __name__ == "__main__":
-    test_main()
