@@ -31,7 +31,7 @@ if __name__ == "__main__":
     os.mkdir(pic_dir)
     gps_outfile = output_dir + "/gps.txt"
     gps_session = dashgps.initialize()
-    cam = dashcam.initialize()
+    cam = dashcam.initialize(1280, 720)
     
     write_line(dashgps.get_gps_csv_header(), gps_outfile)
     
