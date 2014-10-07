@@ -31,7 +31,15 @@ sudo gpsd /dev/ttyUSB0 -F /var/run/gpsd.sock
 echo ""
 echo "Starting gps-dashcam."
 cd /home/pi/Desktop/gps-dashcam
-python /home/pi/Desktop/gps-dashcam/dashmain.py > /home/pi/Desktop/gps-dashcam/data/output.txt &
+python dashmain.py > /home/pi/Desktop/gps-dashcam/data/output-dashcam.txt &
+cd /
+
+
+# Start GPIO Shutdown Listener
+echo ""
+echo "Starting pushbutton Shutdown Listener."
+cd /home/pi/Desktop/gps-dashcam
+sudo python shutdown.py & > /home/pi/Desktop/gps-dashcam/data/output-shutdown.txt
 cd /
 
 exit 0
