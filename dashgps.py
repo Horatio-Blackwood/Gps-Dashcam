@@ -16,27 +16,30 @@
 #   sudo killal gpsd
 
 import gps
+import time
 
 
 class PositionReport(object):
-    def __init__(self, lat, lat_err, lon, lon_err, time, speed, speed_err, alt, alt_err, climb_rate, identifier):
+    def __init__(self, lat, lat_err, lon, lon_err, timestamp, speed, speed_err, alt, alt_err, climb_rate, identifier):
         self.lat = lat
         self.lat_err = lat_err
         self.lon = lon
         self.lon_err = lon_err
-        self.time = time
+        self.timestamp = timestamp
         self.speed = speed
         self.speed_err = speed_err
         self.alt = alt
         self.alt_err = alt_err
         self.climb_rate = climb_rate
         self.id = identifier
+        self.system_time = time.time()
 
     def __str__(self):
-        print "Position Report:\n   L/L:", self.lat, " / ", self.lon, "\n   Speed:", self.speed, "\n   Altitude:", self.alt, "\n   Time:", self.time
+        print "Position Report:\n   L/L:", self.lat, " / ", self.lon, "\n   Speed:", self.speed, "\n   Altitude:", self.alt, "\n   Report Time:", self.timestamp
 
     def to_csv(self):
-        return str(self.lat ) + "," \
+        return str(self.system_time) + "," \
+               + str(self.lat) + "," \
                + str(self.lon) + "," \
                + str(self.lat_err) + "," \
                + str(self.lon_err) + "," \
@@ -44,12 +47,12 @@ class PositionReport(object):
                + str(self.speed_err) + "," \
                + str(self.alt) + "," \
                + str(self.alt_err) + "," \
-               + str(self.time) + "," \
+               + str(self.timestamp) + "," \
                + str(self.climb_rate) + "," \
                + str(self.id)
 
 def get_gps_csv_header():
-    return "#lat,long,lat_err,lon_err,speed(m/sec),speed_err(m/sec),alt(m),alt_err(m),timestamp,climb(m/min),id"
+    return "#system-time,lat,long,lat_err,lon_err,speed(m/sec),speed_err(m/sec),alt(m),alt_err(m),fix-timestamp,climb(m/min),id"
 
 
 def initialize():
@@ -62,9 +65,6 @@ def initialize():
 
 def get_posit(session, identifier):
     posit = session.next()
-
-    #print posit
-    #print ""
 
     lat = None
     lat_err = None

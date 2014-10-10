@@ -42,4 +42,11 @@ cd /home/pi/Desktop/gps-dashcam
 sudo python shutdown.py & > /home/pi/Desktop/gps-dashcam/data/output-shutdown.txt
 cd /
 
+# Start GPIO Reset Listener
+echo ""
+echo "Starting pushbutton Reset Listener."
+cd /home/pi/Desktop/gps-dashcam
+sudo python reset.py & > /home/pi/Desktop/gps-dashcam/data/output-reset.txt
+cd /
+
 exit 0
